@@ -4,7 +4,7 @@ tag_name = "v1.0.0"
 commit_hash = "HEAD"
 tag_message = "Initial release"
 
-# Create the annotated tag using the Git command
+
 command = f"git tag -a {tag_name} {commit_hash} -m \"{tag_message}\""
 subprocess.run(command, shell=True, check=True)
 
