@@ -16,26 +16,26 @@
 
 import subprocess
 
-# Get the last existing tag in the repository
+# Get the latest tag
 last_tag = subprocess.check_output(['git', 'describe', '--abbrev=0', '--tags']).strip().decode()
 
-# Extract the numeric portion of the last tag
-last_tag_number = int(''.join(filter(str.isdigit, last_tag)))
+# Split the tag into major, minor, and patch components
+major, minor, patch = last_tag.split(".")
 
-# Increment the tag number
-new_tag_number = last_tag_number + 1
+# Increment the major component
+new_major = int(major) + 1
 
-# Generate the new tag name with the incremented number
-tag_name = f"v{new_tag_number}.0.0"
+# Construct the new tag
+new_tag = f"{new_major}.0.0"
 
-# Set the commit hash and tag message
+# Define the commit hash and tag message
 commit_hash = "HEAD"
 tag_message = "New release"
 
-# Create the annotated tag using the Git command
-command = f"git tag -a {tag_name} {commit_hash} -m \"{tag_message}\""
+# Create the tag
+command = f"git tag -a {new_tag} {commit_hash} -m \"{tag_message}\""
 subprocess.run(command, shell=True, check=True)
 
 # Push the tag to the remote repository
-push_command = f"git push origin {tag_name}"
+push_command = f"git push origin {new_tag}"
 subprocess.run(push_command, shell=True, check=True)
